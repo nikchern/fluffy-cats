@@ -15,9 +15,9 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	</filter-mapping>
 
 	<listener>
-		<listener-class>com.fluffypages.server.admin.AdminServletModule</listener-class>
+		<listener-class>com.fluffypages.server.admin.ServletConfig</listener-class>
 	</listener>
-	
+
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
