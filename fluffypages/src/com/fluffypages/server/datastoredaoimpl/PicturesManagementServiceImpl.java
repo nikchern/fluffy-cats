@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import com.fluffypages.server.admin.PicturesManagementService;
 import com.fluffypages.server.datastoredaoimpl.dto.PictureDtoUtils;
 import com.fluffypages.server.datastoredaoimpl.dto.Picture;
+import com.fluffypages.server.datastoredaoimpl.dto.PictureEntityFields;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -44,14 +45,12 @@ public class PicturesManagementServiceImpl implements PicturesManagementService 
 
   @Override
   public List<Picture> getPicturesRange(int offset, int limit) {
-    List<Picture> resultList = new ArrayList<>();
-
-    Query q = new Query("Person").addSort("height", SortDirection.DESCENDING);
+    Query q = new Query(Picture.class.getSimpleName());//.addSort(PictureEntityFields.RATING, SortDirection.DESCENDING);
+    log.log(Level.INFO, "Loading pictures range with query:" + q);
     PreparedQuery pq = datastore.prepare(q);
     List<Entity> entityList = pq.asList(FetchOptions.Builder.withLimit(5));
-
-    
-    return resultList;
+    log.log(Level.INFO, "Loaded " + entityList.size() +  " pictures");
+    return dtoUtils.createPicturesFromEntityList(entityList);
   }
 
 }
